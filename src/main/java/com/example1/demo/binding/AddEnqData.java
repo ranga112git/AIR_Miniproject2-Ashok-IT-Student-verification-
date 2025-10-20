@@ -2,6 +2,7 @@ package com.example1.demo.binding;
 
 public class AddEnqData {
 
+	 private Integer addId;
 	private String studentName;
 	private Long studentPhno;
 	private String classMode;
@@ -11,6 +12,12 @@ public class AddEnqData {
 	
 	
 	
+	public Integer getAddId() {
+		return addId;
+	}
+	public void setAddId(Integer addId) {
+		this.addId = addId;
+	}
 	public String getStudentName() {
 		return studentName;
 	}

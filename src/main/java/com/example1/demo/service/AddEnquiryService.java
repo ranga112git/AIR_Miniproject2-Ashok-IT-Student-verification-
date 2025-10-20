@@ -16,4 +16,6 @@ public interface AddEnquiryService {
 	public boolean saveEnquiry(AddEnqData data);
 	public List<AddEnquiry> getEnquiries();
 	public List<AddEnquiry> getFilterEnqs(SearchEnqData data,Integer userID);
+	public AddEnqData getEnquiryById(Integer enqId);
+	
 }

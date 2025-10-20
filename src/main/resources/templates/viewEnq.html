@@ -63,7 +63,7 @@ $(document).ready(function(){
 						aria-current="page" href="dashboard">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="enquiry">Add
 							Enquiry</a></li>
-					<li class="nav-item"><a class="nav-link" href="/viewEq">View
+					<li class="nav-item"><a class="nav-link" href="viewEq">View
 							Enquiries</a></li>
 				</ul>
 				<a href="/" class="btn btn-danger">Logout</a>
@@ -143,7 +143,9 @@ $(document).ready(function(){
 												<td th:text="${enq.dateCreated}"></td>
 												<td th:text="${enq.enqStatus}"></td>
 												<td th:text="${enq.classMode}"></td>
-												<td><a href="@{edit}" class="btn btn-primary">Edit</a></td>
+                                                 <td>
+                                                <a th:href="@{/edit(enqId=${enq.addId})}" class="btn btn-warning btn-sm">Edit</a>
+                                            </td>
 											</tr>
 										</tbody>
 									</table>

@@ -20,9 +20,9 @@
       <td th:text="${enq.dateCreated}"></td>
       <td th:text="${enq.enqStatus}"></td>
       <td th:text="${enq.classMode}"></td>
-      <td>
-        <a th:href="@{/edit/{id}(id=${enq.addId})}" class="btn btn-primary btn-sm">Edit</a>
-      </td>
+       <td>
+             <a th:href="@{/edit(enqId=${enq.addId})}" class="btn btn-warning btn-sm">Edit</a>
+       </td>
     </tr>
   </tbody>
 </table>

@@ -1,9 +1,9 @@
 package com.example1.demo.controller;
 
-import java.nio.channels.SeekableByteChannel;
+
 import java.util.List;
 
-import javax.mail.Session;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ import com.example1.demo.binding.AddEnqData;
 import com.example1.demo.binding.DashBoard;
 import com.example1.demo.binding.SearchEnqData;
 import com.example1.demo.entity.AddEnquiry;
-import com.example1.demo.entity.UserEntity;
-import com.example1.demo.repo.UserRepo;
+
+
 import com.example1.demo.service.AddEnquiryService;
 
 @Controller
@@ -108,6 +108,26 @@ public class AddEnquiry_Controller {
 	     model.addAttribute("enqStatus", enqStatus);
 	     model.addAttribute("searchData", searchData);
 	}
+	
+	@GetMapping("/edit")
+	public String editEnquiry(@RequestParam("enqId") Integer enqId, Model model) {
+
+	    AddEnqData enqData = service.getEnquiryById(enqId);
+	    model.addAttribute("formObj", enqData);
+
+	    // Add dropdown data if needed (status, course names, etc.)
+	   
+	    List<String> courses=service.getCourses();
+		 List<String>    enqStatus= service.getEnqStatus();
+			
+			
+			model.addAttribute("courseNames", courses);
+			model.addAttribute("enqStatusNames", enqStatus);
+	    return "addEnq";  // this is your add enquiry form page
+	}
+	
+	
+	
 	
 	
 	@GetMapping("logout")

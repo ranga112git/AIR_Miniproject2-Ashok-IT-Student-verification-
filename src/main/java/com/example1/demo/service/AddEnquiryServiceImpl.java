@@ -26,7 +26,7 @@ import com.example1.demo.repo.UserRepo;
 @Service
 public class AddEnquiryServiceImpl implements AddEnquiryService {
   @Autowired
-	UserRepo repo;
+	UserRepo Userrepo;
   @Autowired
   private CoursesRepo coursesrepo;
   @Autowired
@@ -41,7 +41,7 @@ public class AddEnquiryServiceImpl implements AddEnquiryService {
 	public DashBoard getDashBoard(Integer userId) {
 		 DashBoard response=new DashBoard();
 		
-	Optional<UserEntity> entity=repo.findById(userId);
+	Optional<UserEntity> entity=Userrepo.findById(userId);
 	if(entity.isPresent()) {
 	       UserEntity userEntity=entity.get();
 	            List<AddEnquiry>   enquiries= userEntity.getEnquiries();
@@ -83,15 +83,28 @@ public class AddEnquiryServiceImpl implements AddEnquiryService {
 
 	@Override
 	public boolean saveEnquiry(AddEnqData data) {
-		AddEnquiry addData=new AddEnquiry();
-		BeanUtils.copyProperties(data, addData);
+		
+		 AddEnquiry addData = new AddEnquiry();
+		    
+		    if (data.getAddId() != null) {
+		        // Editing existing enquiry
+		        Optional<AddEnquiry> existing = addenq.findById(data.getAddId());
+		        if (existing.isPresent()) {
+		            addData = existing.get(); // use existing entity
+		        }
+		    }
+
+		    BeanUtils.copyProperties(data, addData, "addId", "user", "dateCreated", "lastUpdated");
+		
+		
+		
 		
 		Integer userId= (Integer) session.getAttribute("id");
 		
 		if(userId==null) {
 			return false;
 		}
-	Optional<UserEntity> en=repo.findById(userId);
+	Optional<UserEntity> en=Userrepo.findById(userId);
 	
 	
 	if(!en.isPresent()) {
@@ -107,10 +120,10 @@ public class AddEnquiryServiceImpl implements AddEnquiryService {
 		return true;
 	}
 
-	@Override
+	
 	public List<AddEnquiry> getEnquiries() {
 	Integer	userId=(Integer)session.getAttribute("id");
-    Optional<UserEntity>	entity=repo.findById(userId);
+    Optional<UserEntity>	entity=Userrepo.findById(userId);
     if(entity.isPresent()) {
     UserEntity	en=entity.get();
     List<AddEnquiry>    enquiries=en.getEnquiries();
@@ -122,10 +135,10 @@ public class AddEnquiryServiceImpl implements AddEnquiryService {
 		return null;
 	}
 
-	@Override
+	
 	public List<AddEnquiry> getFilterEnqs(SearchEnqData data, Integer userID) {
 		Integer	userId=(Integer)session.getAttribute("id");
-	    Optional<UserEntity>	entity=repo.findById(userId);
+	    Optional<UserEntity>	entity=Userrepo.findById(userId);
 	    if(entity.isPresent()) {
 	    UserEntity	en=entity.get();
 	    List<AddEnquiry>    enquiries=en.getEnquiries();
@@ -144,6 +157,22 @@ public class AddEnquiryServiceImpl implements AddEnquiryService {
 	    }
 		
 		return null;
+	}
+
+	
+	
+
+	
+	public AddEnqData getEnquiryById(Integer enqId) {
+		 Optional<AddEnquiry> optional = addenq.findById(enqId);
+
+		    if (optional.isPresent()) {
+		        AddEnquiry entity = optional.get();
+		        AddEnqData data = new AddEnqData();
+		        BeanUtils.copyProperties(entity, data);
+		        return data;
+		    }
+		    return null;
 	}
 
 }

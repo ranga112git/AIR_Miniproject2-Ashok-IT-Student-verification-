@@ -33,7 +33,7 @@
 						aria-current="page" href="dashboard">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Add
 							Enquiry</a></li>
-					<li class="nav-item"><a class="nav-link" href="enquires">View
+					<li class="nav-item"><a class="nav-link" href="viewEq">View
 							Enquiries</a></li>
 				</ul>
 				<a href="/" class="btn btn-danger">Logout</a>
@@ -59,6 +59,10 @@
 									<p th:text="${suc}" class="text-success"/>
                                     <p th:text="${err}" class="text-danger"/>
 									<form th:action="@{addEnquiry}" th:object="${formObj}" method="POST">
+									
+									
+									<input type="hidden" th:field="*{addId}" />    
+									
 										<div class="form-outline mb-4">
 											<input type="text" id="form2Example11" class="form-control"
 												placeholder="student Name" th:field="*{studentName}"/> <label class="form-label"
